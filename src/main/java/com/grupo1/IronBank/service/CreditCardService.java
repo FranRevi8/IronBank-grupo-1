@@ -5,6 +5,7 @@ import com.grupo1.IronBank.repository.CreditCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,18 @@ public class CreditCardService {
     }
 
     public CreditCard createCreditCard(CreditCard creditCard){
+        if (creditCard.getCreditLimit() == null ||
+                creditCard.getCreditLimit().compareTo(BigDecimal.valueOf(100)) < 0 ||
+                creditCard.getCreditLimit().compareTo(BigDecimal.valueOf(100000)) > 0) {
+            creditCard.setCreditLimit(BigDecimal.valueOf(100));
+        }
+
+        if (creditCard.getInterestRate() == null ||
+                creditCard.getInterestRate().compareTo(BigDecimal.valueOf(0.1)) < 0 ||
+                creditCard.getInterestRate().compareTo(BigDecimal.valueOf(0.2)) > 0) {
+            creditCard.setInterestRate(BigDecimal.valueOf(0.2));
+        }
+
         return creditCardRepository.save(creditCard);
     }
 
