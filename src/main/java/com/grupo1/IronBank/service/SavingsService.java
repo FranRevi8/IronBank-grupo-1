@@ -5,6 +5,7 @@ import com.grupo1.IronBank.repository.SavingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,18 @@ public class SavingsService {
     }
 
     public Savings createSavings(Savings savings){
+        if (savings.getMinimumBalance() == null ||
+                savings.getMinimumBalance().compareTo(BigDecimal.valueOf(100)) < 0 ||
+                savings.getMinimumBalance().compareTo(BigDecimal.valueOf(1000)) > 0) {
+            savings.setMinimumBalance(BigDecimal.valueOf(1000));
+        }
+
+        if (savings.getInterestRate() == null ||
+                savings.getInterestRate().compareTo(BigDecimal.valueOf(0.0025)) < 0 ||
+                savings.getInterestRate().compareTo(BigDecimal.valueOf(0.5)) > 0) {
+            savings.setInterestRate(BigDecimal.valueOf(0.0025));
+        }
+
         return savingsRepository.save(savings);
     }
 
