@@ -20,10 +20,10 @@ public class Account {
     private BigDecimal balance;
     private String secretKey;
 
-    @OneToOne
+    @ManyToOne
     private AccountHolder primaryOwner;
 
-    @OneToOne
+    @ManyToOne
     private AccountHolder secondaryOwner;
 
     private BigDecimal penaltyFee;
