@@ -1,5 +1,6 @@
 package com.grupo1.IronBank.service;
 
+import com.grupo1.IronBank.classes.Money;
 import com.grupo1.IronBank.model.CreditCard;
 import com.grupo1.IronBank.repository.CreditCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,9 @@ public class CreditCardService {
 
     public CreditCard createCreditCard(CreditCard creditCard){
         if (creditCard.getCreditLimit() == null ||
-                creditCard.getCreditLimit().compareTo(BigDecimal.valueOf(100)) < 0 ||
-                creditCard.getCreditLimit().compareTo(BigDecimal.valueOf(100000)) > 0) {
-            creditCard.setCreditLimit(BigDecimal.valueOf(100));
+                creditCard.getCreditLimit().getAmount().compareTo(BigDecimal.valueOf(100)) < 0 ||
+                creditCard.getCreditLimit().getAmount().compareTo(BigDecimal.valueOf(100000)) > 0) {
+            creditCard.setCreditLimit(new Money(BigDecimal.valueOf(100)));
         }
 
         if (creditCard.getInterestRate() == null ||

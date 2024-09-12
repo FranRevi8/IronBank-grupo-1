@@ -1,5 +1,6 @@
 package com.grupo1.IronBank.service;
 
+import com.grupo1.IronBank.classes.Money;
 import com.grupo1.IronBank.model.Savings;
 import com.grupo1.IronBank.repository.SavingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,9 @@ public class SavingsService {
 
     public Savings createSavings(Savings savings){
         if (savings.getMinimumBalance() == null ||
-                savings.getMinimumBalance().compareTo(BigDecimal.valueOf(100)) < 0 ||
-                savings.getMinimumBalance().compareTo(BigDecimal.valueOf(1000)) > 0) {
-            savings.setMinimumBalance(BigDecimal.valueOf(1000));
+                savings.getMinimumBalance().getAmount().compareTo(BigDecimal.valueOf(100)) < 0 ||
+                savings.getMinimumBalance().getAmount().compareTo(BigDecimal.valueOf(1000)) > 0) {
+            savings.setMinimumBalance(new Money(BigDecimal.valueOf(1000)));
         }
 
         if (savings.getInterestRate() == null ||

@@ -1,6 +1,6 @@
 package com.grupo1.IronBank.service;
 
-import com.grupo1.IronBank.dtos.CheckingUpdateDTO;
+import com.grupo1.IronBank.classes.Money;
 import com.grupo1.IronBank.model.AccountHolder;
 import com.grupo1.IronBank.model.Checking;
 import com.grupo1.IronBank.model.StudentChecking;
@@ -59,13 +59,13 @@ public class CheckingService {
             studentChecking.setSecondaryOwner(checking.getSecondaryOwner());
             studentChecking.setBalance(checking.getBalance());
             studentChecking.setSecretKey(checking.getSecretKey());
-            studentChecking.setMinimumBalance(BigDecimal.valueOf(0));
-            studentChecking.setMonthlyMaintenanceFee(BigDecimal.valueOf(0));
+            studentChecking.setMinimumBalance(new Money(BigDecimal.valueOf(0)));
+            studentChecking.setMonthlyMaintenanceFee(new Money(BigDecimal.valueOf(0)));
 
             return studentCheckingRepository.save(studentChecking);
         }
-        checking.setMinimumBalance(BigDecimal.valueOf(200));
-        checking.setMonthlyMaintenanceFee(BigDecimal.valueOf(12));
+        checking.setMinimumBalance(new Money(BigDecimal.valueOf(200)));
+        checking.setMonthlyMaintenanceFee(new Money(BigDecimal.valueOf(12)));
         return checkingRepository.save(checking);
     }
 

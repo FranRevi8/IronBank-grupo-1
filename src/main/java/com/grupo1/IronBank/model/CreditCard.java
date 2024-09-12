@@ -1,6 +1,7 @@
 package com.grupo1.IronBank.model;
 
-import jakarta.persistence.Entity;
+import com.grupo1.IronBank.classes.Money;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,7 +13,13 @@ import java.math.BigDecimal;
 @Entity
 public class CreditCard extends Account implements Serializable {
 
-    private BigDecimal creditLimit;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "credit_limit_amount")),
+            @AttributeOverride(name= "currency", column = @Column(name= "credit_limit_currency"))
+    })
+    private Money creditLimit;
+
     private BigDecimal interestRate;
 
 }

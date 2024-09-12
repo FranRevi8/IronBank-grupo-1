@@ -1,6 +1,7 @@
 package com.grupo1.IronBank.model;
 
-import jakarta.persistence.Entity;
+import com.grupo1.IronBank.classes.Money;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,6 +13,12 @@ import java.math.BigDecimal;
 @Entity
 public class Savings extends Account implements Serializable {
 
-    private BigDecimal minimumBalance;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "minimum_balance_amount")),
+            @AttributeOverride(name= "currency", column = @Column(name= "minimum_balance_currency"))
+    })
+    private Money minimumBalance;
+
     private BigDecimal interestRate;
 }

@@ -1,9 +1,9 @@
 package com.grupo1.IronBank.model;
 
+import com.grupo1.IronBank.classes.Money;
 import com.grupo1.IronBank.enums.Status;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,7 +17,12 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private BigDecimal balance;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "balance_amount")),
+            @AttributeOverride(name= "currency", column = @Column(name= "balance_currency"))
+    })
+    private Money balance;
     private String secretKey;
 
     @ManyToOne
@@ -26,7 +31,12 @@ public class Account {
     @ManyToOne
     private AccountHolder secondaryOwner;
 
-    private BigDecimal penaltyFee;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "penalty_fee_amount")),
+            @AttributeOverride(name= "currency", column = @Column(name= "penalty_fee_currency"))
+    })
+    private Money penaltyFee;
     private LocalDate creationDate;
     private Status status;
 
@@ -34,13 +44,13 @@ public class Account {
     private List<ThirdParty> thirdParty;
 
     public Account() {
-        this.penaltyFee = BigDecimal.valueOf(40);
+        this.penaltyFee = new Money(new BigDecimal(40));
         this.status = Status.ACTIVE;
         this.creationDate = LocalDate.now();
     }
 
-    public void setPenaltyFee(BigDecimal penaltyFee) {
-        this.penaltyFee = BigDecimal.valueOf(40);
+    public void setPenaltyFee(Money penaltyFee) {
+        this.penaltyFee = new Money(new BigDecimal(40));
     }
 
 }
