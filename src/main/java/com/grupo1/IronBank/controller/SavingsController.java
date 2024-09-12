@@ -1,5 +1,6 @@
 package com.grupo1.IronBank.controller;
 
+import com.grupo1.IronBank.classes.Money;
 import com.grupo1.IronBank.model.Savings;
 import com.grupo1.IronBank.service.SavingsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,21 @@ public class SavingsController {
     public ResponseEntity<Savings> getSavingById(@PathVariable Long id){
         Optional<Savings> savings = savingsService.getSavingById(id);
         return savings.map(ResponseEntity::ok).orElseGet(()-> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/balance")
+    public ResponseEntity<Money> getBalance(@PathVariable Long id) {
+        Optional<Savings> optionalSavings = savingsService.getSavingById(id);
+
+        if (optionalSavings.isPresent()) {
+            Savings savingsAccount = optionalSavings.get();
+
+            savingsService.applyInterest(savingsAccount);
+
+            return ResponseEntity.ok(savingsAccount.getBalance());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping

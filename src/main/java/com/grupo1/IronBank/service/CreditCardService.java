@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,5 +55,23 @@ public class CreditCardService {
             return Optional.of(creditCardRepository.save(creditCard));
         }
         return Optional.empty();
+    }
+
+    public void applyInterest(CreditCard creditCard) {
+        LocalDate now = LocalDate.now();
+        LocalDate lastInterest = creditCard.getLastInterestAdded();
+
+        if (lastInterest == null || ChronoUnit.MONTHS.between(lastInterest, now) >= 1) {
+            BigDecimal monthlyRate = creditCard.getInterestRate().divide(new BigDecimal("12"), RoundingMode.HALF_UP);
+            Money balance = creditCard.getBalance();
+
+            BigDecimal interest = balance.getAmount().multiply(monthlyRate);
+            balance.setAmount(balance.getAmount().add(interest));
+
+            creditCard.setBalance(balance);
+            creditCard.setLastInterestAdded(now);
+
+            creditCardRepository.save(creditCard);
+        }
     }
 }

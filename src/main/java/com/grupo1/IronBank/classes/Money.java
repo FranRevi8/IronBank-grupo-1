@@ -71,9 +71,7 @@ public class Money {
         return this.amount;
     }
 
-    private void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
+    public void setAmount(BigDecimal amount) {this.amount = amount;}
 
     public String toString() {
         return getCurrency().getSymbol() + " " + getAmount();

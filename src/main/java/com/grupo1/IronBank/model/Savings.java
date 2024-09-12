@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -21,4 +22,5 @@ public class Savings extends Account implements Serializable {
     private Money minimumBalance;
 
     private BigDecimal interestRate;
+    private LocalDate lastInterestAdded;
 }

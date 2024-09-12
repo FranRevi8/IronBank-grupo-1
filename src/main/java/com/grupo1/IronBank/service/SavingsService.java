@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,5 +54,23 @@ public class SavingsService {
             return Optional.of(savingsRepository.save(savings));
         }
         return Optional.empty();
+    }
+
+    public void applyInterest(Savings savingsAccount) {
+        LocalDate now = LocalDate.now();
+        LocalDate lastInterest = savingsAccount.getLastInterestAdded();
+
+        if (lastInterest == null || ChronoUnit.YEARS.between(lastInterest, now) >= 1) {
+            BigDecimal interestRate = savingsAccount.getInterestRate();
+            Money balance = savingsAccount.getBalance();
+
+            BigDecimal interest = balance.getAmount().multiply(interestRate);
+            balance.setAmount(balance.getAmount().add(interest));
+
+            savingsAccount.setBalance(balance);
+            savingsAccount.setLastInterestAdded(now);
+
+            savingsRepository.save(savingsAccount);
+        }
     }
 }

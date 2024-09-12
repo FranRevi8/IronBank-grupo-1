@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -21,5 +22,6 @@ public class CreditCard extends Account implements Serializable {
     private Money creditLimit;
 
     private BigDecimal interestRate;
+    private LocalDate lastInterestAdded;
 
 }

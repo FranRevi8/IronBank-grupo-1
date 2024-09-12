@@ -1,5 +1,6 @@
 package com.grupo1.IronBank.controller;
 
+import com.grupo1.IronBank.classes.Money;
 import com.grupo1.IronBank.model.CreditCard;
 import com.grupo1.IronBank.service.CreditCardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,21 @@ public class CreditCardController {
     public ResponseEntity<CreditCard> getCreditCardById(@PathVariable Long id){
         Optional<CreditCard> creditCard = creditCardService.getCreditCardById(id);
         return creditCard.map(ResponseEntity::ok).orElseGet(()-> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/balance")
+    public ResponseEntity<Money> getBalance(@PathVariable Long id) {
+        Optional<CreditCard> optionalCreditCard = creditCardService.getCreditCardById(id);
+
+        if (optionalCreditCard.isPresent()) {
+            CreditCard creditCard = optionalCreditCard.get();
+
+            creditCardService.applyInterest(creditCard);
+
+            return ResponseEntity.ok(creditCard.getBalance());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
