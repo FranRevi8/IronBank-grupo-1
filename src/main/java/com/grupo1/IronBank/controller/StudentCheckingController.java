@@ -28,11 +28,6 @@ public class StudentCheckingController {
         return studentChecking.map(ResponseEntity::ok).orElseGet(()-> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public StudentChecking createStudentChecking(@RequestBody StudentChecking studentChecking){
-        return studentCheckingService.createStudentChecking(studentChecking);
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStudentChecking(@PathVariable Long id){
         if(studentCheckingService.deleteStudentChecking(id)){

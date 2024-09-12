@@ -9,6 +9,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-public class StudentChecking extends Account implements Serializable {
+public class StudentChecking extends Checking implements Serializable {
 
 }

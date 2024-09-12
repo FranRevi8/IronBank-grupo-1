@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @MappedSuperclass
 public class Account {
 
@@ -33,4 +32,15 @@ public class Account {
 
     @ManyToMany
     private List<ThirdParty> thirdParty;
+
+    public Account() {
+        this.penaltyFee = BigDecimal.valueOf(40);
+        this.status = Status.ACTIVE;
+        this.creationDate = LocalDate.now();
+    }
+
+    public void setPenaltyFee(BigDecimal penaltyFee) {
+        this.penaltyFee = BigDecimal.valueOf(40);
+    }
+
 }

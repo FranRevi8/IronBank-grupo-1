@@ -1,7 +1,6 @@
 package com.grupo1.IronBank.service;
 
 import com.grupo1.IronBank.model.StudentChecking;
-import com.grupo1.IronBank.model.StudentChecking;
 import com.grupo1.IronBank.repository.StudentCheckingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +18,6 @@ public class StudentCheckingService {
 
     public Optional<StudentChecking> getStudentCheckingById(Long id){
         return studentCheckingRepository.findById(id);
-    }
-
-    public StudentChecking createStudentChecking(StudentChecking studentChecking){
-        return studentCheckingRepository.save(studentChecking);
     }
 
     public boolean deleteStudentChecking(Long id){
