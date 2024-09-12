@@ -21,6 +21,7 @@ public class CreditCard extends Account implements Serializable {
     })
     private Money creditLimit;
 
+    @Column(precision = 20, scale = 8)
     private BigDecimal interestRate;
     private LocalDate lastInterestAdded;
 

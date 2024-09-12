@@ -62,7 +62,7 @@ public class CreditCardService {
         LocalDate lastInterest = creditCard.getLastInterestAdded();
 
         if (lastInterest == null || ChronoUnit.MONTHS.between(lastInterest, now) >= 1) {
-            BigDecimal monthlyRate = creditCard.getInterestRate().divide(new BigDecimal("12"), RoundingMode.HALF_UP);
+            BigDecimal monthlyRate = creditCard.getInterestRate().divide(new BigDecimal("12"),6, RoundingMode.DOWN);
             Money balance = creditCard.getBalance();
 
             BigDecimal interest = balance.getAmount().multiply(monthlyRate);
