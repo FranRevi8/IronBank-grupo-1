@@ -92,13 +92,13 @@ public class CreditCardControllerTest {
     public void testGetBalance_success() throws Exception {
         CreditCard card = new CreditCard();
         card.setId(1L);
-        card.setBalance(new Money(new BigDecimal("1000"))); // Suponiendo que Money tiene un constructor que recibe BigDecimal
+        card.setBalance(new Money(new BigDecimal("1000")));
 
         Mockito.when(creditCardService.getCreditCardById(1L)).thenReturn(Optional.of(card));
 
         mockMvc.perform(get("/credit-card/1/balance"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.amount").value(1000)); // Suponiendo que Money tiene un campo 'amount'
+                .andExpect(jsonPath("$.amount").value(1000));
     }
 
     @Test
