@@ -23,6 +23,8 @@ De estas superclases derivan varias subclases:
 - Usuarios: `AccountHolder`, `Admin`, `ThirdParty`
 - Cuentas: `Checking`, `Savings`, `StudentChecking`, `CreditCard`
 
+![](ERD.png)
+
 También se crearon otras clases auxiliares como **Money** (para manejar valores monetarios) y **Address** (para la dirección de los usuarios). Estos se usaron como atributos en otras entidades.
 
 ### 4. Estructura de Carpetas y CRUD Básico
